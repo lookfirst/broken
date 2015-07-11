@@ -35,17 +35,13 @@ let bundler = (app) => {
 		builder.config(
 			{
 				paths: {
-					'github:*': '../jspm_packages/github/*.js',
-					'npm:*': '../jspm_packages/npm/*.js',
-					'*': '*.js'
-				},
-				//map: {
-				//	"js": "./target/js"
-				//}
+					'github:*': './jspm_packages/github/*',
+					'npm:*': './jspm_packages/npm/*'
+				}
 			}
 		);
 		return builder.buildSFX(`js/${app}/app`, `${path.war}/js/${app}/${app}-bundle.js`,
-			{minify: false, sourceMaps: false});
+			{minify: false, sourceMaps: true});
 	});
 };
 
