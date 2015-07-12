@@ -1,3 +1,4 @@
+import fs from 'fs';
 import gulp from 'gulp';
 import gulpHelpers from 'gulp-helpers';
 import {Builder} from 'jspm';
@@ -27,6 +28,13 @@ let path = {
 	]
 };
 
+let lnsilent = (src, dest, type) => {
+	try {
+		fs.symlinkSync(src, dest, type);
+	} catch(e) {
+		// ignore
+	}
+};
 
 let bundler = (app) => {
 	let builder = new Builder();
@@ -50,6 +58,8 @@ gulp.task('deploy', (callback) => {
 });
 
 gulp.task('bundle', () => {
+	lnsilent('../src/main/config.js', 'target/config.js', 'file');
+	lnsilent('../src/main/jspm_packages', 'target/jspm_packages', 'dir');
 	return bundler('sell');
 });
 
