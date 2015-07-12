@@ -35,9 +35,10 @@ let bundler = (app) => {
 
 taskMaker.defineTask('clean', {taskName: 'clean', src: path.output});
 taskMaker.defineTask('babel', {taskName: 'babel', src: path.source, dest: path.output, ngAnnotate: true, compilerOptions: {modules: 'system'}, watchTask: true, notify: true});
+taskMaker.defineTask('ngHtml2Js', {taskName: 'ngHtml2Js', src: path.templates, dest: path.output, compilerOptions: {modules: 'system'}, watchTask: true});
 
 gulp.task('compile', (callback) => {
-	return runSequence(['babel'], callback);
+	return runSequence(['babel', 'ngHtml2Js'], callback);
 });
 
 gulp.task('recompile', (callback) => {
