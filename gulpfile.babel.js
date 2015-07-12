@@ -1,6 +1,6 @@
 import gulp from 'gulp';
 import gulpHelpers from 'gulp-helpers';
-import Builder from 'systemjs-builder';
+import {Builder} from 'jspm';
 
 let taskMaker = gulpHelpers.taskMaker(gulp);
 let situation = gulpHelpers.situation();
@@ -30,19 +30,7 @@ let path = {
 
 let bundler = (app) => {
 	let builder = new Builder();
-
-	return builder.loadConfig('src/main/config.js').then(function() {
-		builder.config(
-			{
-				paths: {
-					'github:*': './jspm_packages/github/*',
-					'npm:*': './jspm_packages/npm/*'
-				}
-			}
-		);
-		return builder.buildSFX(`js/${app}/app`, `${path.war}/js/${app}/${app}-bundle.js`,
-			{minify: false, sourceMaps: true});
-	});
+	return builder.buildSFX(`js/${app}/app`, `${path.war}/js/${app}/${app}-bundle.js`, {minify: false, sourceMaps: true});
 };
 
 taskMaker.defineTask('clean', {taskName: 'clean', src: path.output});
